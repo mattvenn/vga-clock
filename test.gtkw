@@ -1,0 +1,88 @@
+[*]
+[*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
+[*] Tue Jul  7 15:04:09 2020
+[*]
+[dumpfile] "/home/matt/work/fpga/vga-clock/test.vcd"
+[dumpfile_mtime] "Tue Jul  7 15:03:39 2020"
+[dumpfile_size] 10390
+[savefile] "/home/matt/work/fpga/vga-clock/test.gtkw"
+[timestart] 88866
+[size] 2337 1243
+[pos] -1 -1
+*-9.000000 91105 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[sst_width] 272
+[signals_width] 334
+[sst_expanded] 1
+[sst_vpaned_height] 371
+@28
+test.clk
+@200
+-
+@800201
+-rgb
+@29
+test.top_0.b1
+test.top_0.b2
+test.top_0.g1
+test.top_0.g2
+test.top_0.r1
+test.top_0.r2
+@1000201
+-rgb
+@800200
+-time counter
+@24
+test.top_0.sec_u[3:0]
+test.top_0.sec_d[2:0]
+test.top_0.min_u[3:0]
+test.top_0.min_d[2:0]
+test.top_0.hrs_u[3:0]
+test.top_0.hrs_d[1:0]
+@1000200
+-time counter
+@800200
+-font
+@24
+test.top_0.font_0.addr[5:0]
+@28
+test.top_0.font_0.dout[2:0]
+test.top_0.draw
+@1000200
+-font
+@800200
+-vga
+@28
+test.top_0.vga_0.activevideo
+@24
+test.top_0.vga_0.x_px[9:0]
+test.top_0.vga_0.y_px[9:0]
+@28
+test.top_0.vga_0.hsync
+test.top_0.vga_0.vsync
+test.top_0.vga_0.px_clk
+@1000200
+-vga
+@800200
+-font indexing
+@c00024
+test.top_0.x_block[5:0]
+@28
+(0)test.top_0.x_block[5:0]
+(1)test.top_0.x_block[5:0]
+(2)test.top_0.x_block[5:0]
+(3)test.top_0.x_block[5:0]
+(4)test.top_0.x_block[5:0]
+(5)test.top_0.x_block[5:0]
+@1401200
+-group_end
+@24
+test.top_0.y_block[5:0]
+test.top_0.digit_index[5:0]
+test.top_0.col_index[1:0]
+test.top_0.font_addr[5:0]
+test.top_0.number[3:0]
+@1000200
+-font indexing
+[pattern_trace] 1
+[pattern_trace] 0

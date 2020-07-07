@@ -1,0 +1,29 @@
+[*]
+[*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
+[*] Tue Jul  7 14:41:22 2020
+[*]
+[dumpfile] "/home/matt/work/fpga/vga-clock/digit.vcd"
+[dumpfile_mtime] "Tue Jul  7 14:41:06 2020"
+[dumpfile_size] 941
+[savefile] "/home/matt/work/fpga/vga-clock/digit.gtkw"
+[timestart] 0
+[size] 1969 815
+[pos] -1 -1
+*-4.000000 18 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[sst_width] 272
+[signals_width] 384
+[sst_expanded] 1
+[sst_vpaned_height] 222
+@28
+test.clk
+test.reset
+@24
+test.digit_0.digit_index[5:0]
+test.digit_0.col_index[1:0]
+@25
+test.digit_0.number[3:0]
+test.digit_0.x_block[5:0]
+test.digit_0.y_block[5:0]
+[pattern_trace] 1
+[pattern_trace] 0
