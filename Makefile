@@ -11,7 +11,8 @@ DEVICE = up5k
 PIN_DEF = icebreaker.pcf
 PACKAGE = sg48
 
-PWM_WIDTH = 6
+# target freq for vga panel
+FREQ = 31.5
 
 all: $(PROJECT).bin
 
@@ -21,17 +22,21 @@ SOURCES = digit.v VgaSyncGen.v fontROM.v top.v
 # $@ The file name of the target of the rule.rule
 # $< first pre requisite
 # $^ names of all preerquisites
+LISTINGS = digit_index.hex col_index.hex
+
+$(LISTINGS): ./gen_indexes.py
+	python3 ./gen_indexes.py
 
 # rules for building the json
-%.json: $(SOURCES)
+%.json: $(SOURCES) $(LISTINGS)
 #	yosys -l yosys.log -p 'synth_ice40 -chparam PWM_WIDTH $(PWM_WIDTH) -top top -json $(PROJECT).json' $(SOURCES)
 	yosys -l yosys.log -p 'synth_ice40 -top top -json $(PROJECT).json' $(SOURCES)
 
 %.asc: %.json $(ICEBREAKER_PIN_DEF) 
-	nextpnr-ice40 -l nextpnr.log --seed $(SEED) --freq 20 --package $(PACKAGE) --$(DEVICE) --asc $@ --pcf $(PIN_DEF) --json $<
+	nextpnr-ice40 -l nextpnr.log --seed $(SEED) --freq $(FREQ) --package $(PACKAGE) --$(DEVICE) --asc $@ --pcf $(PIN_DEF) --json $<
 
 gui: $(PROJECT).json $(ICEBREAKER_PIN_DEF) 
-	nextpnr-ice40 --gui -l nextpnr.log --seed $(SEED) --freq 20 --package $(PACKAGE) --$(DEVICE) --asc $(PROJECT).asc --pcf $(PIN_DEF) --json $(PROJECT).json
+	nextpnr-ice40 --gui -l nextpnr.log --seed $(SEED) --freq $(FREQ) --package $(PACKAGE) --$(DEVICE) --asc $(PROJECT).asc --pcf $(PIN_DEF) --json $(PROJECT).json
 
 # bin, for programming
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.asc
@@ -59,7 +64,7 @@ debug-digit:
 	gtkwave digit.vcd digit.gtkw
 
 clean:
-	rm -f ${PROJECT}.json ${PROJECT}.asc ${PROJECT}.bin *log
+	rm -f ${PROJECT}.json ${PROJECT}.asc ${PROJECT}.bin *log $(LISTINGS)
 
 #secondary needed or make will remove useful intermediate files
 .SECONDARY:

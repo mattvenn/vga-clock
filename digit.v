@@ -2,7 +2,10 @@
 module digit
     #(
     parameter DIGIT_INDEX_FILE = "digit_index.hex",
-    parameter COL_INDEX_FILE = "col_index.hex"
+    parameter COL_INDEX_FILE = "col_index.hex",
+    parameter FONT_W = 3,
+    parameter FONT_H = 5,
+    parameter NUM_BLOCKS = 20
     )
     (
     input wire clk,
@@ -11,12 +14,13 @@ module digit
     input wire [5:0] y_block,
     input wire [3:0] number,      // the number to display: [0->9: ]
     output reg [5:0] digit_index,
-    output reg [1:0] col_index
+    output reg [COL_INDEX_W-1:0] col_index
     );
-    
-    localparam FONT_H = 5'd5;
+
+    localparam COL_INDEX_W = $clog2(FONT_W); 
+
     reg [5:0] digit_index_mem [0:11];
-    reg [1:0] col_index_mem [0:26];
+    reg [COL_INDEX_W-1:0] col_index_mem [0:NUM_BLOCKS];
 
     initial begin
         if (DIGIT_INDEX_FILE) $readmemh(DIGIT_INDEX_FILE, digit_index_mem);
