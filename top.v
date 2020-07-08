@@ -19,9 +19,9 @@ reg [1:0] hrs_d;
         if(reset) begin
             sec_u <= 0;
             sec_d <= 0;
-            min_u <= 7;
-            min_d <= 1;
-            hrs_u <= 7;
+            min_u <= 9;
+            min_d <= 2;
+            hrs_u <= 9;
             hrs_d <= 1;
         end else begin
             if(sec_u == 10) begin
@@ -112,15 +112,6 @@ reg [1:0] hrs_d;
                         BLANK;
 
    
-    /*
-    assign rrggbb = {1 = activevideo && draw;
-    assign r2 = activevideo && draw && x_block > FONT_W * 2;
-    assign g1 = activevideo && draw && x_block > FONT_W * 4;
-    assign g2 = activevideo && draw && x_block > FONT_W * 5;
-    assign b1 = activevideo && draw && x_block > FONT_W * 6;
-    assign b2 = activevideo && draw && x_block > FONT_W * 7;
-    */
-    
     assign rrggbb = activevideo && draw ? color : 6'b0;
     assign font_addr = digit_index + y_block;
     reg draw = 0;

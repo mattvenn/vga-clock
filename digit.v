@@ -23,7 +23,7 @@ module digit
 
     reg [5:0] digit_index_mem [0:11];
     reg [COL_INDEX_W-1:0] col_index_mem [0:NUM_BLOCKS];
-    reg [5:0] color_index_mem [0:6];
+    reg [5:0] color_index_mem [0:7];
 
     initial begin
         if (DIGIT_INDEX_FILE) $readmemh(DIGIT_INDEX_FILE, digit_index_mem);
