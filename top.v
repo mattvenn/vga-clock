@@ -4,12 +4,7 @@ module top (
     input wire reset_n,
     output wire hsync,
     output wire vsync,
-    output wire r1,
-    output wire r2,
-    output wire g1,
-    output wire g2,
-    output wire b1,
-    output wire b2
+    output wire [5:0] rrggbb
     );
 
 reg [3:0] sec_u;
@@ -24,9 +19,9 @@ reg [1:0] hrs_d;
         if(reset) begin
             sec_u <= 0;
             sec_d <= 0;
-            min_u <= 5;
-            min_d <= 1;
-            hrs_u <= 0;
+            min_u <= 7;
+            min_d <= 5;
+            hrs_u <= 1;
             hrs_d <= 1;
         end else begin
             if(sec_u == 10) begin
@@ -60,6 +55,8 @@ reg [1:0] hrs_d;
             sec_u <= sec_u + 1;
             sec_counter <= 0;
         end
+ //       x_block <= x_px >> 4;
+  //      y_block <= y_px >> 4;
     end
 
     reg [25:0] sec_counter = 0;
@@ -79,6 +76,10 @@ reg [1:0] hrs_d;
 
     wire [5:0] x_block = x_px >> 4;
     wire [5:0] y_block = y_px >> 4;
+    reg [5:0] x_block_q;
+    reg [5:0] y_block_q;
+   // reg [5:0] x_block = 0;
+   // reg [5:0] y_block = 0; 
 
     wire activevideo;
     wire px_clk;
@@ -90,6 +91,7 @@ reg [1:0] hrs_d;
     wire [5:0] digit_index;
     wire [3:0] number;
     wire [COL_INDEX_W-1:0] col_index;
+    reg [COL_INDEX_W-1:0] col_index_q;
 
     initial begin
         $display(FONT_W);
@@ -110,19 +112,31 @@ reg [1:0] hrs_d;
                         BLANK;
 
    
-    assign r1 = activevideo && draw;
+    /*
+    assign rrggbb = {1 = activevideo && draw;
     assign r2 = activevideo && draw && x_block > FONT_W * 2;
     assign g1 = activevideo && draw && x_block > FONT_W * 4;
     assign g2 = activevideo && draw && x_block > FONT_W * 5;
     assign b1 = activevideo && draw && x_block > FONT_W * 6;
     assign b2 = activevideo && draw && x_block > FONT_W * 7;
+    */
+    
+    wire [1:0] rr, gg, bb;
+    assign    rr = draw ? 2'b01 : 2'b0;
+    assign    gg = draw ? 2'b10 : 2'b0;
+    assign    bb = draw ? 2'b10 : 2'b0;
 
+    assign rrggbb = activevideo ? { rr, gg, bb } : 6'b0;
     assign font_addr = digit_index + y_block;
     reg draw = 0;
     always @(posedge px_clk) begin
-        if(x_block < FONT_W * NUM_CHARS && y_block < FONT_H)
-            draw <= font_out[(FONT_W - 1) - col_index];
+        x_block_q <= x_block;
+        y_block_q <= y_block;
+        col_index_q <= col_index;
+        if(x_block_q < FONT_W * NUM_CHARS && y_block_q < FONT_H)
+            draw <= font_out[(FONT_W - 1) - col_index_q];
         else
             draw <= 0;
+    
     end
 endmodule

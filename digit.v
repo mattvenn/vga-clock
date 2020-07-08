@@ -29,7 +29,7 @@ module digit
 
     always @(posedge clk) begin
         digit_index <= digit_index_mem[number];
-        col_index <= col_index_mem[x_block];
+        col_index <= col_index_mem[x_block < NUM_BLOCKS ? x_block : NUM_BLOCKS-1];
     end
    
 endmodule
