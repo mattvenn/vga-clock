@@ -89,6 +89,7 @@ reg [1:0] hrs_d;
     wire [5:0] font_addr;
     fontROM #(.data_width(FONT_W)) font_0 (.clk(px_clk), .addr(font_addr), .dout(font_out));
     wire [5:0] digit_index;
+    wire [5:0] color;
     wire [3:0] number;
     wire [COL_INDEX_W-1:0] col_index;
     reg [COL_INDEX_W-1:0] col_index_q;
@@ -98,7 +99,7 @@ reg [1:0] hrs_d;
         $display(COL_INDEX_W);
     end
 
-    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .y_block(y_block), .number(number), .digit_index(digit_index), .col_index(col_index));
+    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .y_block(y_block), .number(number), .digit_index(digit_index), .col_index(col_index), .color(color));
 
 
     assign number     = x_block < FONT_W * 1 ? hrs_d :
@@ -121,12 +122,7 @@ reg [1:0] hrs_d;
     assign b2 = activevideo && draw && x_block > FONT_W * 7;
     */
     
-    wire [1:0] rr, gg, bb;
-    assign    rr = draw ? 2'b01 : 2'b0;
-    assign    gg = draw ? 2'b10 : 2'b0;
-    assign    bb = draw ? 2'b10 : 2'b0;
-
-    assign rrggbb = activevideo ? { rr, gg, bb } : 6'b0;
+    assign rrggbb = activevideo && draw ? color : 6'b0;
     assign font_addr = digit_index + y_block;
     reg draw = 0;
     always @(posedge px_clk) begin

@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
-[*] Wed Jul  8 09:41:24 2020
+[*] Wed Jul  8 14:01:22 2020
 [*]
 [dumpfile] "/home/matt/work/fpga/vga-clock/test.vcd"
-[dumpfile_mtime] "Wed Jul  8 09:40:04 2020"
-[dumpfile_size] 200258
+[dumpfile_mtime] "Wed Jul  8 14:00:39 2020"
+[dumpfile_size] 200643
 [savefile] "/home/matt/work/fpga/vga-clock/test.gtkw"
-[timestart] 67141
+[timestart] 66935
 [size] 2337 845
 [pos] -1 -1
-*-4.000000 67205 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-8.000000 68123 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_0.
 [sst_width] 272
-[signals_width] 334
+[signals_width] 443
 [sst_expanded] 1
 [sst_vpaned_height] 232
 @28
@@ -22,7 +22,7 @@ test.clk
 -
 @800200
 -rgb
-@29
+@28
 test.top_0.rrggbb[5:0]
 @1000200
 -rgb
@@ -61,6 +61,10 @@ test.top_0.vga_0.px_clk
 -vga
 @800200
 -font indexing
+@24
+test.top_0.digit_0.char[3:0]
+@29
+test.top_0.digit_0.color[5:0]
 @c00024
 test.top_0.x_block[5:0]
 @28
@@ -78,6 +82,8 @@ test.top_0.digit_index[5:0]
 test.top_0.col_index[1:0]
 test.top_0.font_addr[5:0]
 test.top_0.number[3:0]
+@28
+test.top_0.color[5:0]
 @1000200
 -font indexing
 [pattern_trace] 1
