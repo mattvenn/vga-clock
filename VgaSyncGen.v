@@ -52,7 +52,7 @@ module VgaSyncGen (
     SB_PLL40_PAD #(
             .FEEDBACK_PATH("SIMPLE"),
             .DIVR(4'b0000),
-            .DIVF(7'b0110011),
+            .DIVF(7'b1010011),
             .DIVQ(3'b101),
             .FILTER_RANGE(3'b001)
         ) uut (

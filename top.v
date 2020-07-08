@@ -20,8 +20,8 @@ reg [1:0] hrs_d;
             sec_u <= 0;
             sec_d <= 0;
             min_u <= 7;
-            min_d <= 5;
-            hrs_u <= 1;
+            min_d <= 1;
+            hrs_u <= 7;
             hrs_d <= 1;
         end else begin
             if(sec_u == 10) begin
@@ -55,8 +55,6 @@ reg [1:0] hrs_d;
             sec_u <= sec_u + 1;
             sec_counter <= 0;
         end
- //       x_block <= x_px >> 4;
-  //      y_block <= y_px >> 4;
     end
 
     reg [25:0] sec_counter = 0;
@@ -74,8 +72,9 @@ reg [1:0] hrs_d;
     wire [9:0] x_px;          // X position for actual pixel.
     wire [9:0] y_px;          // Y position for actual pixel.
 
-    wire [5:0] x_block = x_px >> 4;
-    wire [5:0] y_block = y_px >> 4;
+    // blocks are 16 x 16 px. total width = 8 * blocks of 4 =  512. 
+    wire [5:0] x_block = (x_px -64) >> 4;
+    wire [5:0] y_block = (y_px -200) >> 4;
     reg [5:0] x_block_q;
     reg [5:0] y_block_q;
    // reg [5:0] x_block = 0;

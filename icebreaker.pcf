@@ -25,12 +25,12 @@ set_io -nowarn FLASH_IO3  13
 
 set_io -nowarn hsync       47
 set_io -nowarn vsync       45
-set_io -nowarn rrggbb[0]          3
-set_io -nowarn rrggbb[1]          48
-set_io -nowarn rrggbb[2]          46
-set_io -nowarn rrggbb[3]          44
-set_io -nowarn rrggbb[4]          4
-set_io -nowarn rrggbb[5]          2
+set_io -nowarn rrggbb[5]          3
+set_io -nowarn rrggbb[4]          48
+set_io -nowarn rrggbb[3]          46
+set_io -nowarn rrggbb[2]          44
+set_io -nowarn rrggbb[1]          4
+set_io -nowarn rrggbb[0]          2
 
 # PMOD 1A
 set_io -nowarn P1A1        4
