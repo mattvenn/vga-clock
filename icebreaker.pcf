@@ -10,6 +10,11 @@ set_io -nowarn reset_n      10
 set_io -nowarn LEDR_N     11
 set_io -nowarn LEDG_N     37
 
+# pmod buttons
+set_io -nowarn adj_sec       20
+set_io -nowarn adj_min       19
+set_io -nowarn adj_hrs       18
+
 # RGB LED Driver
 set_io -nowarn LED_RED_N  39
 set_io -nowarn LED_GRN_N  40
@@ -77,9 +82,9 @@ set_io -nowarn P2_10      18
 set_io -nowarn LED1       27
 set_io -nowarn LED2       25
 set_io -nowarn LED3       21
-set_io -nowarn BTN2       19
 set_io -nowarn LED5       26
 set_io -nowarn LED4       23
 set_io -nowarn BTN1       20
+set_io -nowarn BTN2       19
 set_io -nowarn BTN3       18
 

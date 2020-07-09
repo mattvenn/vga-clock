@@ -2,27 +2,33 @@
 module top (
     input wire clk, 
     input wire reset_n,
+    input wire adj_hrs,
+    input wire adj_min,
+    input wire adj_sec,
     output wire hsync,
     output wire vsync,
     output wire [5:0] rrggbb
     );
 
-reg [3:0] sec_u;
-reg [2:0] sec_d;
-reg [3:0] min_u;
-reg [2:0] min_d;
-reg [3:0] hrs_u;
-reg [1:0] hrs_d;
     wire reset = !reset_n;
+
+    reg [3:0] sec_u;
+    reg [2:0] sec_d;
+    reg [3:0] min_u;
+    reg [2:0] min_d;
+    reg [3:0] hrs_u;
+    reg [1:0] hrs_d;
+    reg [25:0] sec_counter = 0;
+    reg [21:0] button_counter = 0; // if button held should advance 4 per second = 8M counts at 31.5Mhz clock
 
     always @(posedge px_clk) begin
         if(reset) begin
             sec_u <= 0;
             sec_d <= 0;
-            min_u <= 9;
-            min_d <= 2;
+            min_u <= 0;
+            min_d <= 1;
             hrs_u <= 9;
-            hrs_d <= 1;
+            hrs_d <= 0;
         end else begin
             if(sec_u == 10) begin
                 sec_u <= 0;
@@ -50,14 +56,24 @@ reg [1:0] hrs_d;
             end
         end
 
+        button_counter <= button_counter + 1;
         sec_counter <= sec_counter + 1;
+
         if(sec_counter == 31_500_000) begin
             sec_u <= sec_u + 1;
             sec_counter <= 0;
         end
+
+        // bit crappy, a quick click will often do nothing
+        if(&button_counter && adj_hrs)
+            hrs_u <= hrs_u + 1;
+        if(&button_counter && adj_min)
+            min_u <= min_u + 1;
+        if(&button_counter && adj_sec)
+            sec_u <= sec_u + 1;
+
     end
 
-    reg [25:0] sec_counter = 0;
 
     // these are in blocks
     localparam OFFSET_Y_BLK = 0;
