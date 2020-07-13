@@ -6,6 +6,9 @@ SEED = 10
 PROJECT = vga_clock
 PI_ADDR = pi@fpga.local
 FOMU_FLASH = ~/fomu-flash/fomu-flash
+LOG_LUTS = ~/work/fpga/logLUTs/logLUTs.py 
+GIT_COMMIT = $(shell git log -1 --pretty=%h) 
+GIT_MESSAGE = $(shell git log -1 --pretty=%s) 
 
 DEVICE = up5k
 PIN_DEF = icebreaker.pcf
@@ -23,6 +26,9 @@ SOURCES = digit.v VgaSyncGen.v fontROM.v debounce.v button_pulse.v top.v
 # $< first pre requisite
 # $^ names of all preerquisites
 LISTINGS = digit_index.hex col_index.hex
+
+logluts:
+	$(LOG_LUTS) --message "$(GIT_MESSAGE)" --commit $(GIT_COMMIT)
 
 $(LISTINGS): ./gen_indexes.py
 	python3 ./gen_indexes.py
