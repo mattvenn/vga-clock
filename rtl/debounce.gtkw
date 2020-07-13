@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
+[*] Mon Jul 13 11:40:00 2020
+[*]
+[dumpfile] "/home/matt/work/fpga/vga-clock/rtl/debounce_bmc/engine_0/trace.vcd"
+[dumpfile_mtime] "Mon Jul 13 11:39:29 2020"
+[dumpfile_size] 1365
+[savefile] "/home/matt/work/fpga/vga-clock/rtl/debounce.gtkw"
+[timestart] 0
+[size] 1914 755
+[pos] -1 -1
+*-5.078066 76 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 272
+[signals_width] 464
+[sst_expanded] 1
+[sst_vpaned_height] 200
+@420
+smt_step
+@29
+debounce.clk_en
+@28
+debounce.button
+debounce.button_hist[7:0]
+debounce.clk
+debounce.debounced
+[pattern_trace] 1
+[pattern_trace] 0

@@ -3,6 +3,7 @@ module test;
     reg clk = 0;
     reg px_clk = 0;
     reg reset_n = 0;
+    reg adj_sec = 1;
     localparam DAY = 60 * 60 * 60;
 
     initial begin
@@ -14,7 +15,7 @@ module test;
         $finish;
     end
 
-    top top_0(.clk(clk), .reset_n(reset_n));
+    top top_0(.clk(clk), .reset_n(reset_n), .adj_sec(adj_sec));
     assign top_0.vga_0.px_clk = px_clk;
     always #4 clk = !clk;
     always #1 px_clk = !px_clk;

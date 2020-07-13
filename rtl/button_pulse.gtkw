@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
+[*] Mon Jul 13 12:21:36 2020
+[*]
+[dumpfile] "/home/matt/work/fpga/vga-clock/rtl/button_pulse_bmc/engine_0/trace.vcd"
+[dumpfile_mtime] "Mon Jul 13 12:21:01 2020"
+[dumpfile_size] 676
+[savefile] "/home/matt/work/fpga/vga-clock/rtl/button_pulse.gtkw"
+[timestart] 0
+[size] 1918 931
+[pos] -1 -1
+*-4.374051 16 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 272
+[signals_width] 366
+[sst_expanded] 1
+[sst_vpaned_height] 262
+@420
+smt_step
+@28
+button_pulse.button
+button_pulse.clk
+button_pulse.pulse
+@22
+button_pulse.comp[3:0]
+@23
+button_pulse.count[3:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -19,15 +19,14 @@ module top (
     reg [3:0] hrs_u;
     reg [1:0] hrs_d;
     reg [25:0] sec_counter = 0;
-    reg [21:0] button_counter = 0; // if button held should advance 4 per second = 8M counts at 31.5Mhz clock
 
     always @(posedge px_clk) begin
         if(reset) begin
             sec_u <= 0;
             sec_d <= 0;
             min_u <= 0;
-            min_d <= 1;
-            hrs_u <= 9;
+            min_d <= 0;
+            hrs_u <= 0;
             hrs_d <= 0;
         end else begin
             if(sec_u == 10) begin
@@ -56,7 +55,6 @@ module top (
             end
         end
 
-        button_counter <= button_counter + 1;
         sec_counter <= sec_counter + 1;
 
         if(sec_counter == 31_500_000) begin
@@ -65,15 +63,30 @@ module top (
         end
 
         // bit crappy, a quick click will often do nothing
-        if(&button_counter && adj_hrs)
-            hrs_u <= hrs_u + 1;
-        if(&button_counter && adj_min)
-            min_u <= min_u + 1;
-        if(&button_counter && adj_sec)
+        if(adj_sec_pulse)
             sec_u <= sec_u + 1;
-
+        if(adj_min_pulse)
+            min_u <= min_u + 1;
+        if(adj_hrs_pulse)
+            hrs_u <= hrs_u + 1;
+        
+        debounce_clk_en <= debounce_clk_en + 1;
     end
 
+    wire adj_sec_db, adj_sec_pulse;
+    wire adj_min_db, adj_min_pulse;
+    wire adj_hrs_db, adj_hrs_pulse;
+
+    wire clk_en = &debounce_clk_en;
+
+    reg [17:0] debounce_clk_en = 0;
+    debounce debounce_sec (.clk(px_clk), .clk_en(clk_en), .button(adj_sec), .debounced(adj_sec_db));
+    debounce debounce_min (.clk(px_clk), .clk_en(clk_en), .button(adj_min), .debounced(adj_min_db));
+    debounce debounce_hrs (.clk(px_clk), .clk_en(clk_en), .button(adj_hrs), .debounced(adj_hrs_db));
+    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_sec (.clk(px_clk), .clk_en(clk_en), .button(adj_sec_db), .pulse(adj_sec_pulse));
+    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_min (.clk(px_clk), .clk_en(clk_en), .button(adj_min_db), .pulse(adj_min_pulse));
+    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_hrs (.clk(px_clk), .clk_en(clk_en), .button(adj_hrs_db), .pulse(adj_hrs_pulse));
+    
 
     // these are in blocks
     localparam OFFSET_Y_BLK = 0;

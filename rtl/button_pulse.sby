@@ -1,0 +1,21 @@
+[tasks]
+cover
+bmc
+prove
+
+[options]
+cover: mode cover
+cover: depth 100
+bmc: mode bmc
+prove: mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -verific
+read -formal button_pulse.v
+prep -top button_pulse
+
+[files]
+button_pulse.v

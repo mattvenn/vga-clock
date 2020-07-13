@@ -1,0 +1,20 @@
+[tasks]
+cover
+bmc
+prove
+
+[options]
+cover: mode cover
+bmc: mode bmc
+prove: mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -verific
+read -formal debounce.v
+prep -top debounce
+
+[files]
+debounce.v

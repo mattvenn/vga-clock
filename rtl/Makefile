@@ -17,7 +17,7 @@ FREQ = 31.5
 all: $(PROJECT).bin
 
 BUILD_DIR = ./
-SOURCES = digit.v VgaSyncGen.v fontROM.v top.v
+SOURCES = digit.v VgaSyncGen.v fontROM.v debounce.v button_pulse.v top.v
 
 # $@ The file name of the target of the rule.rule
 # $< first pre requisite

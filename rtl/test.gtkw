@@ -1,23 +1,25 @@
 [*]
 [*] GTKWave Analyzer v3.3.105 (w)1999-2020 BSI
-[*] Wed Jul  8 14:01:22 2020
+[*] Mon Jul 13 12:09:08 2020
 [*]
-[dumpfile] "/home/matt/work/fpga/vga-clock/test.vcd"
-[dumpfile_mtime] "Wed Jul  8 14:00:39 2020"
-[dumpfile_size] 200643
-[savefile] "/home/matt/work/fpga/vga-clock/test.gtkw"
-[timestart] 66935
-[size] 2337 845
+[dumpfile] "/home/matt/work/fpga/vga-clock/rtl/test.vcd"
+[dumpfile_mtime] "Mon Jul 13 12:08:51 2020"
+[dumpfile_size] 202373
+[savefile] "/home/matt/work/fpga/vga-clock/rtl/test.gtkw"
+[timestart] 29892
+[size] 2337 1198
 [pos] -1 -1
-*-8.000000 68123 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-10.000000 33919 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_0.
 [sst_width] 272
 [signals_width] 443
 [sst_expanded] 1
-[sst_vpaned_height] 232
+[sst_vpaned_height] 356
 @28
 test.clk
+@29
+test.top_0.reset
 @200
 -
 @800200
@@ -26,7 +28,7 @@ test.clk
 test.top_0.rrggbb[5:0]
 @1000200
 -rgb
-@c00200
+@800200
 -time counter
 @24
 test.top_0.sec_u[3:0]
@@ -35,7 +37,7 @@ test.top_0.min_u[3:0]
 test.top_0.min_d[2:0]
 test.top_0.hrs_u[3:0]
 test.top_0.hrs_d[1:0]
-@1401200
+@1000200
 -time counter
 @800200
 -font
@@ -59,11 +61,11 @@ test.top_0.vga_0.vsync
 test.top_0.vga_0.px_clk
 @1401200
 -vga
-@800200
+@c00200
 -font indexing
 @24
 test.top_0.digit_0.char[3:0]
-@29
+@28
 test.top_0.digit_0.color[5:0]
 @c00024
 test.top_0.x_block[5:0]
@@ -84,7 +86,14 @@ test.top_0.font_addr[5:0]
 test.top_0.number[3:0]
 @28
 test.top_0.color[5:0]
-@1000200
+@1401200
 -font indexing
+@28
+test.top_0.adj_sec
+test.top_0.adj_sec_db
+test.top_0.adj_sec_pulse
+@24
+test.top_0.pulse_secs.count[8:0]
+test.top_0.pulse_secs.comp[8:0]
 [pattern_trace] 1
 [pattern_trace] 0
