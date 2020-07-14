@@ -55,38 +55,37 @@ module top (
             end
         end
 
+        // second counter
         sec_counter <= sec_counter + 1;
-
         if(sec_counter == 31_500_000) begin
             sec_u <= sec_u + 1;
             sec_counter <= 0;
         end
 
-        // bit crappy, a quick click will often do nothing
+        // adjustment buttons
         if(adj_sec_pulse)
             sec_u <= sec_u + 1;
         if(adj_min_pulse)
             min_u <= min_u + 1;
         if(adj_hrs_pulse)
             hrs_u <= hrs_u + 1;
-        
-        debounce_clk_en <= debounce_clk_en + 1;
     end
 
-    wire adj_sec_db, adj_sec_pulse;
-    wire adj_min_db, adj_min_pulse;
-    wire adj_hrs_db, adj_hrs_pulse;
+    wire adj_sec_pulse, adj_min_pulse, adj_hrs_pulse;
 
-    wire clk_en = &debounce_clk_en;
+    // want button_clk_en to be about 10ms
+    // frame rate is 70hz is 15ms
+    wire but_clk_en = y_px == 0 && x_px == 0;
 
-    reg [17:0] debounce_clk_en = 0;
-    debounce debounce_sec (.clk(px_clk), .clk_en(clk_en), .button(adj_sec), .debounced(adj_sec_db));
-    debounce debounce_min (.clk(px_clk), .clk_en(clk_en), .button(adj_min), .debounced(adj_min_db));
-    debounce debounce_hrs (.clk(px_clk), .clk_en(clk_en), .button(adj_hrs), .debounced(adj_hrs_db));
-    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_sec (.clk(px_clk), .clk_en(clk_en), .button(adj_sec_db), .pulse(adj_sec_pulse));
-    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_min (.clk(px_clk), .clk_en(clk_en), .button(adj_min_db), .pulse(adj_min_pulse));
-    button_pulse #(.MIN_COUNT(1), .DEC_COUNT(1), .MAX_COUNT(32)) pulse_hrs (.clk(px_clk), .clk_en(clk_en), .button(adj_hrs_db), .pulse(adj_hrs_pulse));
-    
+    localparam MAX_BUT_RATE = 16;
+    localparam DEC_COUNT = 1;
+    localparam MIN_COUNT = 2;
+    button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
+        pulse_sec (.clk(px_clk), .clk_en(but_clk_en), .button(adj_sec), .pulse(adj_sec_pulse));
+    button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
+        pulse_min (.clk(px_clk), .clk_en(but_clk_en), .button(adj_min), .pulse(adj_min_pulse));
+    button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
+        pulse_hrs (.clk(px_clk), .clk_en(but_clk_en), .button(adj_hrs), .pulse(adj_hrs_pulse));
 
     // these are in blocks
     localparam OFFSET_Y_BLK = 0;
