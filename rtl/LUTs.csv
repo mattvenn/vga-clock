@@ -1,11 +1,9 @@
-date,commit,message,flops,luts,freq
-2020-07-07,f9544f2,"first commit",87,232,40.28
-2020-07-07,624a333,"ignore & pcf",87,212,38.67
-2020-07-08,9acf3de,take care of delays to fix output. convert rgb triplet output to array,101,212,40.23
-2020-07-08,9167a4f,multicolour,107,223,39.62
-2020-07-08,2be9b62,"fix colour encoding, better orange, fix pll",108,232,35.32
-2020-07-08,6d9fe9f,"8 colours, tweaked violet",108,234,36.55
-2020-07-09,c92de77,"buttons for adjustment, tweak colour again",130,271,35.74
-2020-07-10,1cf4982,move all to rtl dir,130,271,35.74
-2020-07-10,5e11c77,readme,130,271,35.74
-2020-07-13,276e46b,debounced & accelerated adjustment buttons,189,357,36.31
+commit,flops,luts,freq
+f9544f2,87,232,40.28
+624a333,87,212,38.67
+9acf3de,101,212,40.23
+9167a4f,107,223,39.62
+2be9b62,108,232,35.32
+6d9fe9f,108,234,36.55
+c92de77,130,271,35.74
+276e46b,189,357,36.31
