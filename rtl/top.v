@@ -36,6 +36,7 @@ module vga_clock (
             if(sec_d == 6) begin
                 sec_d <= 0;
                 min_u <= min_u + 1;
+                color_offset <= color_offset + 1;
             end
             if(min_u == 10) begin
                 min_u <= 0;
@@ -65,8 +66,10 @@ module vga_clock (
         // adjustment buttons
         if(adj_sec_pulse)
             sec_u <= sec_u + 1;
-        if(adj_min_pulse)
+        if(adj_min_pulse) begin
             min_u <= min_u + 1;
+            color_offset <= color_offset + 1;
+        end
         if(adj_hrs_pulse)
             hrs_u <= hrs_u + 1;
     end
@@ -117,6 +120,7 @@ module vga_clock (
     fontROM #(.data_width(FONT_W)) font_0 (.clk(px_clk), .addr(font_addr), .dout(font_out));
     wire [5:0] digit_index;
     wire [5:0] color;
+    reg [3:0] color_offset = 0;
     wire [3:0] number;
     wire [COL_INDEX_W-1:0] col_index;
     reg [COL_INDEX_W-1:0] col_index_q;
@@ -126,7 +130,7 @@ module vga_clock (
         $display(COL_INDEX_W);
     end
 
-    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .y_block(y_block), .number(number), .digit_index(digit_index), .col_index(col_index), .color(color));
+    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .y_block(y_block), .number(number), .digit_index(digit_index), .col_index(col_index), .color(color), .color_offset(color_offset));
 
 
     assign number     = x_block < FONT_W * 1 ? hrs_d :
