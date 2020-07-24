@@ -46,9 +46,7 @@ module VgaSyncGen (
     //
     // FILTER_RANGE: 1 (3'b001)
     //
-    `ifdef __ICARUS__
-        //assign px_clk = clk;
-    `else
+    `ifdef SYNTH
     SB_PLL40_PAD #(
             .FEEDBACK_PATH("SIMPLE"),
             .DIVR(4'b0000),
@@ -62,6 +60,8 @@ module VgaSyncGen (
             .PLLOUTCORE(px_clk)
             );
 
+    `else
+        assign px_clk = clk;
     `endif
         
     /*

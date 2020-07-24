@@ -1,5 +1,5 @@
 `default_nettype none
-module top (
+module vga_clock (
     input wire clk, 
     input wire reset_n,
     input wire adj_hrs,
