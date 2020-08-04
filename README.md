@@ -6,7 +6,7 @@ simple project to show the time on a 640x480 VGA display.
 
 ## FPGA Build instructions
 
-It's setup to run on an icebreaker with [VGA pmod](https://github.com/mattvenn/6bit-pmod-vga) plugged into pmod1a.
+It's setup to run on [1 Bit Squared icebreaker](https://1bitsquared.com/products/icebreaker) with my [VGA pmod](https://github.com/mattvenn/6bit-pmod-vga) plugged into pmod1a.
 
 type
 
