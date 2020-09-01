@@ -4,6 +4,21 @@ simple project to show the time on a 640x480 VGA display.
 
 ![vga clock](docs/vga_clock.jpg)
 
+## Simulation instructions
+
+Ensure that you have libsdl2-dev and verilator installed.
+
+    sudo apt install libsdl2-dev verilator 
+
+To run the simulation use the following commands:
+
+    cd rtl
+    make verilator && ./obj_dir/Vvga_clock
+
+![fb_verilator](docs/fb_verilator.png)
+
+Use the h, m and s keys to increment the hour, minute and second counters respectively.
+
 ## FPGA Build instructions
 
 It's setup to run on [1 Bit Squared icebreaker](https://1bitsquared.com/products/icebreaker) with my [VGA pmod](https://github.com/mattvenn/6bit-pmod-vga) plugged into pmod1a.
