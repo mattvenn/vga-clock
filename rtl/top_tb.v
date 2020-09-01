@@ -15,8 +15,7 @@ module test;
         $finish;
     end
 
-    vga_clock top_0(.clk(clk), .reset_n(reset_n), .adj_sec(adj_sec));
-    assign top_0.vga_0.px_clk = px_clk;
+    vga_clock top_0(.clk(px_clk), .reset_n(reset_n), .adj_sec(adj_sec));
     always #4 clk = !clk;
     always #1 px_clk = !px_clk;
 

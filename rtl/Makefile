@@ -18,12 +18,16 @@ FREQ = 31.5
 all: $(PROJECT).bin
 
 BUILD_DIR = ./
-SOURCES = digit.v VgaSyncGen.v fontROM.v button_pulse.v top.v
+SOURCES = digit.v VgaSyncGen.v fontROM.v button_pulse.v vga_clock.v top.v
 
 # $@ The file name of the target of the rule.rule
 # $< first pre requisite
 # $^ names of all preerquisites
 LISTINGS = digit_index.hex col_index.hex
+
+CFLAGS = -O3 -Iobj_dir -I/usr/share/verilator/include
+
+LDFLAGS = -lSDL2 -lSDL2_image
 
 logluts:
 	$(LOG_LUTS) --add-commit --git ../
@@ -70,8 +74,15 @@ debug-digit:
 	vvp digit.out -fst
 	gtkwave digit.vcd digit.gtkw
 
+obj_dir/Vvga_clock.h : $(SOURCES) $(LISTINGS) ../sim/fb_verilator.cpp
+	verilator --cc vga_clock.v --exe ../sim/fb_verilator.cpp -CFLAGS "$(CFLAGS)" -LDFLAGS "$(LDFLAGS)"
+
+verilator: obj_dir/Vvga_clock.h
+	cd obj_dir && make -f Vvga_clock.mk
+
 clean:
 	rm -f ${PROJECT}.json ${PROJECT}.asc ${PROJECT}.bin *log $(LISTINGS)
+	rm -rf obj_dir
 
 #secondary needed or make will remove useful intermediate files
 .SECONDARY:

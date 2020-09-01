@@ -104,8 +104,10 @@ module vga_clock (
     wire [9:0] y_px;          // Y position for actual pixel.
 
     // blocks are 16 x 16 px. total width = 8 * blocks of 4 =  512. 
+    /* verilator lint_off WIDTH */
     wire [5:0] x_block = (x_px -64) >> 4;
     wire [5:0] y_block = (y_px -200) >> 4;
+    /* verilator lint_on WIDTH */
     reg [5:0] x_block_q;
     reg [5:0] y_block_q;
    // reg [5:0] x_block = 0;
@@ -113,7 +115,8 @@ module vga_clock (
 
     wire activevideo;
     wire px_clk;
-    VgaSyncGen vga_0 (.clk(clk), .hsync(hsync), .vsync(vsync), .x_px(x_px), .y_px(y_px), .activevideo(activevideo), .px_clk(px_clk));
+    assign px_clk = clk;
+    VgaSyncGen vga_0 (.px_clk(px_clk), .hsync(hsync), .vsync(vsync), .x_px(x_px), .y_px(y_px), .activevideo(activevideo));
 
     wire [FONT_W-1:0] font_out;
     wire [5:0] font_addr;
@@ -130,9 +133,9 @@ module vga_clock (
         $display(COL_INDEX_W);
     end
 
-    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .y_block(y_block), .number(number), .digit_index(digit_index), .col_index(col_index), .color(color), .color_offset(color_offset));
+    digit #(.FONT_W(FONT_W), .FONT_H(FONT_H), .NUM_BLOCKS(NUM_CHARS*FONT_W)) digit_0 (.clk(px_clk), .x_block(x_block), .number(number), .digit_index(digit_index), .col_index(col_index), .color(color), .color_offset(color_offset));
 
-
+    /* verilator lint_off WIDTH */
     assign number     = x_block < FONT_W * 1 ? hrs_d :
                         x_block < FONT_W * 2 ? hrs_u :
                         x_block < FONT_W * 3 ? COLON :
@@ -142,7 +145,7 @@ module vga_clock (
                         x_block < FONT_W * 7 ? sec_d :
                         x_block < FONT_W * 8 ? sec_u :
                         BLANK;
-
+    /* verilator lint_on WIDTH */
    
     assign rrggbb = activevideo && draw ? color : 6'b0;
     assign font_addr = digit_index + y_block;
