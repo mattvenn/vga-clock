@@ -8,7 +8,7 @@ simple project to show the time on a 640x480 VGA display.
 
 Ensure that you have libsdl2-dev and verilator installed.
 
-    sudo apt install libsdl2-dev verilator 
+    sudo apt-get install libsdl2-dev libsdl2-image-dev verilator
 
 To run the simulation use the following commands:
 
