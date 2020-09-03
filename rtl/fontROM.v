@@ -33,12 +33,14 @@ module fontROM
     reg [data_width-1:0] mem [(1 << addr_width)-1:0];
 
     initial begin
+        /* verilator lint_off WIDTH */
         if (FONT_FILE) $readmemb(FONT_FILE, mem);
+        /* verilator lint_on WIDTH */
     end
 
     always @(posedge clk)
         begin
-            dout = mem[addr];
+            dout <= mem[addr];
         end
 
 endmodule

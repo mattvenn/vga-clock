@@ -20,50 +20,14 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module VgaSyncGen (
-            input wire       clk,           // Input clock: 12MHz
+            input wire       px_clk,        // Input clock: 31.5MHz
             output wire      hsync,         // Horizontal sync out
             output wire      vsync,         // Vertical sync out
             output reg [9:0] x_px,          // X position for actual pixel.
             output reg [9:0] y_px,          // Y position for actual pixel.
-            output wire      activevideo,
-            output wire      px_clk
+            output wire      activevideo
          );
 
-    // Generated values for pixel clock of 31.5Mhz and 72Hz frame frecuency.
-    // # icepll -i12 -o31.5
-    //
-    // F_PLLIN:    12.000 MHz (given)
-    // F_PLLOUT:   31.500 MHz (requested)
-    // F_PLLOUT:   31.500 MHz (achieved)
-    //
-    // FEEDBACK: SIMPLE
-    // F_PFD:   12.000 MHz
-    // F_VCO: 1008.000 MHz
-    //
-    // DIVR:  0 (4'b0000)
-    // DIVF: 83 (7'b1010011)
-    // DIVQ:  5 (3'b101)
-    //
-    // FILTER_RANGE: 1 (3'b001)
-    //
-    `ifdef SYNTH
-    SB_PLL40_PAD #(
-            .FEEDBACK_PATH("SIMPLE"),
-            .DIVR(4'b0000),
-            .DIVF(7'b1010011),
-            .DIVQ(3'b101),
-            .FILTER_RANGE(3'b001)
-        ) uut (
-            .RESETB(1'b1),
-            .BYPASS(1'b0),
-            .PACKAGEPIN(clk),
-            .PLLOUTCORE(px_clk)
-            );
-
-    `else
-        assign px_clk = clk;
-    `endif
-        
     /*
     http://www.epanorama.net/faq/vga2rgb/calc.html
     [*User-Defined_mode,(640X480)]
@@ -99,10 +63,10 @@ module VgaSyncGen (
     // Initial values.
     initial
     begin
-      x_px <= 0;
-      y_px <= 0;
-      hc <= 0;
-      vc <= 0;
+      x_px = 0;
+      y_px = 0;
+      hc = 0;
+      vc = 0;
     end
 
     // Counting pixels.
