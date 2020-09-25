@@ -41,7 +41,7 @@ $(LISTINGS): ./gen_indexes.py
 # rules for building the json
 %.json: $(SOURCES) $(LISTINGS)
 #	yosys -l yosys.log -p 'synth_ice40 -chparam PWM_WIDTH $(PWM_WIDTH) -top vga_clock -json $(PROJECT).json' $(SOURCES)
-	yosys -l yosys.log -DSYNTH -p 'synth_ice40 -top vga_clock -json $(PROJECT).json' $(SOURCES)
+	yosys -l yosys.log -DSYNTH -p 'synth_ice40 -top top -json $(PROJECT).json' $(SOURCES)
 
 %.asc: %.json $(ICEBREAKER_PIN_DEF) 
 	nextpnr-ice40 -l nextpnr.log --seed $(SEED) --freq $(FREQ) --package $(PACKAGE) --$(DEVICE) --asc $@ --pcf $(PIN_DEF) --json $<
