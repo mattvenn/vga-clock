@@ -50,3 +50,4 @@ module button_pulse
     `endif
 
 endmodule
+`default_nettype wire
