@@ -44,3 +44,4 @@ module fontROM
         end
 
 endmodule
+`default_nettype wire

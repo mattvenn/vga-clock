@@ -165,3 +165,4 @@ module vga_clock (
     
     end
 endmodule
+`default_nettype wire

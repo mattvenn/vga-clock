@@ -112,3 +112,4 @@ module VgaSyncGen (
         end
      end
  endmodule
+`default_nettype wire
