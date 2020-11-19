@@ -8,15 +8,20 @@ module button_pulse
     input wire clk,
     input wire clk_en,
     input wire button,
+    input wire reset,
     output wire pulse
 );
 
-    reg [$clog2(MAX_COUNT-1):0] comp = MAX_COUNT - 1;
-    reg [$clog2(MAX_COUNT-1):0] count = 0;
+    reg [$clog2(MAX_COUNT-1):0] comp;
+    reg [$clog2(MAX_COUNT-1):0] count;
 
     assign pulse = (clk_en && button && count == 0);
 
     always @(posedge clk)
+        if(reset) begin
+            comp <= MAX_COUNT - 1;
+            count <= 0;
+        end else
         if(clk_en) begin
             if(button)
                 count <= count + 1;

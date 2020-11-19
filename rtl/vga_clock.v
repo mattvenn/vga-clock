@@ -18,7 +18,7 @@ module vga_clock (
     reg [2:0] min_d;
     reg [3:0] hrs_u;
     reg [1:0] hrs_d;
-    reg [25:0] sec_counter = 0;
+    reg [25:0] sec_counter;
 
     always @(posedge px_clk) begin
         if(reset) begin
@@ -28,6 +28,8 @@ module vga_clock (
             min_d <= 0;
             hrs_u <= 0;
             hrs_d <= 0;
+            sec_counter <= 0;
+            color_offset <= 0;
         end else begin
             if(sec_u == 10) begin
                 sec_u <= 0;
@@ -84,11 +86,11 @@ module vga_clock (
     localparam DEC_COUNT = 1;
     localparam MIN_COUNT = 2;
     button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
-        pulse_sec (.clk(px_clk), .clk_en(but_clk_en), .button(adj_sec), .pulse(adj_sec_pulse));
+        pulse_sec (.clk(px_clk), .clk_en(but_clk_en), .button(adj_sec), .pulse(adj_sec_pulse), .reset(reset));
     button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
-        pulse_min (.clk(px_clk), .clk_en(but_clk_en), .button(adj_min), .pulse(adj_min_pulse));
+        pulse_min (.clk(px_clk), .clk_en(but_clk_en), .button(adj_min), .pulse(adj_min_pulse), .reset(reset));
     button_pulse #(.MIN_COUNT(MIN_COUNT), .DEC_COUNT(DEC_COUNT), .MAX_COUNT(MAX_BUT_RATE)) 
-        pulse_hrs (.clk(px_clk), .clk_en(but_clk_en), .button(adj_hrs), .pulse(adj_hrs_pulse));
+        pulse_hrs (.clk(px_clk), .clk_en(but_clk_en), .button(adj_hrs), .pulse(adj_hrs_pulse), .reset(reset));
 
     // these are in blocks
     localparam OFFSET_Y_BLK = 0;
@@ -116,14 +118,14 @@ module vga_clock (
     wire activevideo;
     wire px_clk;
     assign px_clk = clk;
-    VgaSyncGen vga_0 (.px_clk(px_clk), .hsync(hsync), .vsync(vsync), .x_px(x_px), .y_px(y_px), .activevideo(activevideo));
+    VgaSyncGen vga_0 (.px_clk(px_clk), .hsync(hsync), .vsync(vsync), .x_px(x_px), .y_px(y_px), .activevideo(activevideo), .reset(reset));
 
     wire [FONT_W-1:0] font_out;
     wire [5:0] font_addr;
     fontROM #(.data_width(FONT_W)) font_0 (.clk(px_clk), .addr(font_addr), .dout(font_out));
     wire [5:0] digit_index;
     wire [5:0] color;
-    reg [3:0] color_offset = 0;
+    reg [3:0] color_offset;
     wire [3:0] number;
     wire [COL_INDEX_W-1:0] col_index;
     reg [COL_INDEX_W-1:0] col_index_q;
@@ -149,8 +151,10 @@ module vga_clock (
    
     assign rrggbb = activevideo && draw ? color : 6'b0;
     assign font_addr = digit_index + y_block;
-    reg draw = 0;
+    reg draw;
     always @(posedge px_clk) begin
+        if(reset) 
+            draw <= 0;
         x_block_q <= x_block;
         y_block_q <= y_block;
         col_index_q <= col_index;

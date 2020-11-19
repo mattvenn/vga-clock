@@ -21,6 +21,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 module VgaSyncGen (
             input wire       px_clk,        // Input clock: 31.5MHz
+            input wire       reset,         // reset
             output wire      hsync,         // Horizontal sync out
             output wire      vsync,         // Vertical sync out
             output reg [9:0] x_px,          // X position for actual pixel.
@@ -72,20 +73,25 @@ module VgaSyncGen (
     // Counting pixels.
     always @(posedge px_clk)
     begin
-        // Keep counting until the end of the line.
-        if (hc < hpixels - 1)
-            hc <= hc + 1;
-        else
-        // When we hit the end of the line, reset the horizontal
-        // counter and increment the vertical counter.
-        // If vertical counter is at the end of the frame, then
-        // reset that one too.
-        begin
+        if(reset) begin
             hc <= 0;
-            if (vc < vlines - 1)
-            vc <= vc + 1;
-        else
-           vc <= 0;
+            vc <= 0;
+        end else begin
+            // Keep counting until the end of the line.
+            if (hc < hpixels - 1)
+                hc <= hc + 1;
+            else
+            // When we hit the end of the line, reset the horizontal
+            // counter and increment the vertical counter.
+            // If vertical counter is at the end of the frame, then
+            // reset that one too.
+            begin
+                hc <= 0;
+                if (vc < vlines - 1)
+                vc <= vc + 1;
+            else
+               vc <= 0;
+            end
         end
      end
 
@@ -97,19 +103,12 @@ module VgaSyncGen (
     // Generate color.
     always @(posedge px_clk)
     begin
-        // First check if we are within vertical active video range.
-        //if (activevideo)
-        //begin
-            x_px <= hc - blackH;
-            y_px <= vc - blackV;
-        //end
-        /*
-        else
-        // We are outside active video range so display black.
-        begin
+        if(reset) begin
             x_px <= 0;
             y_px <= 0;
+        end else begin
+            x_px <= hc - blackH;
+            y_px <= vc - blackV;
         end
-        */
      end
  endmodule
