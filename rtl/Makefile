@@ -15,7 +15,7 @@ PACKAGE = sg48
 # target freq for vga panel
 FREQ = 31.5
 
-all: $(PROJECT).bin
+all: $(LISTINGS) $(PROJECT).bin
 
 BUILD_DIR = ./
 SOURCES = digit.v VgaSyncGen.v fontROM.v button_pulse.v vga_clock.v top.v
