@@ -56,24 +56,24 @@ module vga_clock (
                 hrs_u <= 0;
                 hrs_d <= 0;
             end
-        end
 
-        // second counter
-        sec_counter <= sec_counter + 1;
-        if(sec_counter == 31_500_000) begin
-            sec_u <= sec_u + 1;
-            sec_counter <= 0;
-        end
+            // second counter
+            sec_counter <= sec_counter + 1;
+            if(sec_counter == 31_500_000) begin
+                sec_u <= sec_u + 1;
+                sec_counter <= 0;
+            end
 
-        // adjustment buttons
-        if(adj_sec_pulse)
-            sec_u <= sec_u + 1;
-        if(adj_min_pulse) begin
-            min_u <= min_u + 1;
-            color_offset <= color_offset + 1;
+            // adjustment buttons
+            if(adj_sec_pulse)
+                sec_u <= sec_u + 1;
+            if(adj_min_pulse) begin
+                min_u <= min_u + 1;
+                color_offset <= color_offset + 1;
+            end
+            if(adj_hrs_pulse)
+                hrs_u <= hrs_u + 1;
         end
-        if(adj_hrs_pulse)
-            hrs_u <= hrs_u + 1;
     end
 
     wire adj_sec_pulse, adj_min_pulse, adj_hrs_pulse;
