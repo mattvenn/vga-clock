@@ -62,9 +62,14 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.asc
 
 prog: $(PROJECT).bin
 	iceprog $<
-
 debug:
 	iverilog -o test.out  $(SOURCES) top_tb.v -DDEBUG
+	vvp test.out -fst
+	gtkwave test.vcd test.gtkw
+
+gl-debug:
+	echo $(PDK_PATH)
+	iverilog -o test.out -DSIM -DFUNCTIONAL -DDEBUG -I $(PDK_ROOT)/sky130A/ vga_clock.lvs.powered.v top_gl_tb.v
 	vvp test.out -fst
 	gtkwave test.vcd test.gtkw
 
