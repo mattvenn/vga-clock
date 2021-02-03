@@ -61,15 +61,6 @@ module VgaSyncGen (
     reg [9:0] hc;
     reg [9:0] vc;
 
-    // Initial values.
-    initial
-    begin
-      x_px = 0;
-      y_px = 0;
-      hc = 0;
-      vc = 0;
-    end
-
     // Counting pixels.
     always @(posedge px_clk)
     begin
