@@ -69,7 +69,7 @@ module vga_clock (
                 sec_u <= sec_u + 1;
             if(adj_min_pulse) begin
                 min_u <= min_u + 1;
-                color_offset <= color_offset + 1;
+//                color_offset <= color_offset + 1;
             end
             if(adj_hrs_pulse)
                 hrs_u <= hrs_u + 1;
