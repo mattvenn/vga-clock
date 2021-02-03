@@ -22,7 +22,7 @@ module fontROM
 #(
     parameter FONT_FILE = "font.list",
     parameter addr_width = 6,
-    parameter data_width = 3
+    parameter data_width = 4
 )
 (
     input wire                  clk,
