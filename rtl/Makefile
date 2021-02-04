@@ -71,7 +71,6 @@ gl-debug:
 	echo $(PDK_PATH)
 	iverilog -o test.out -DSIM -DFUNCTIONAL -DDEBUG -I $(PDK_ROOT)/sky130A/ vga_clock.lvs.powered.v top_gl_tb.v
 	vvp test.out -fst
-	gtkwave test.vcd test.gtkw
 
 debug-digit:
 	iverilog -o digit.out  digit.v digit_tb.v -DDEBUG
