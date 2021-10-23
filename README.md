@@ -37,6 +37,8 @@ using [logLUTs](https://github.com/mattvenn/logLUTs) to record resource usage an
 
 ## ASIC utilisation
 
+https://www.zerotoasiccourse.com/post/vga_clock/
+
 using the [Skywater/Google 130nm](https://github.com/google/skywater-pdk) process and [OpenLane](https://github.com/efabless/openlane)
 
 * copy contents of rtl directory to designs/vga_clock/src/
