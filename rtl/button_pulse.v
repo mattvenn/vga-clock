@@ -42,6 +42,7 @@ module button_pulse
             end
         end
 
+    /*
     `ifdef FORMAL
         default clocking @(posedge clk); endclocking
         default disable iff (!clk_en);
@@ -53,6 +54,7 @@ module button_pulse
         assert property (button && count == 0 |-> pulse);
         assert property (pulse |=> !pulse);
     `endif
+    */
 
 endmodule
 `default_nettype wire
