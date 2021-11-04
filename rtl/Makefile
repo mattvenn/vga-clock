@@ -83,6 +83,9 @@ obj_dir/Vvga_clock.h : $(SOURCES) $(LISTINGS) ../sim/fb_verilator.cpp
 verilator: obj_dir/Vvga_clock.h
 	cd obj_dir && make -f Vvga_clock.mk
 
+test:
+	echo "add a test here, for example generate a frame and check it against the png"
+
 clean:
 	rm -f ${PROJECT}.json ${PROJECT}.asc ${PROJECT}.bin *log $(LISTINGS)
 	rm -rf obj_dir
