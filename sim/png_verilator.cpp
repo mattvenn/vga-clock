@@ -4,12 +4,25 @@
 #include <cstdlib>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "Vvga_clock.h"
 #include "verilated.h"
 
 #define WINDOW_WIDTH  640
 #define WINDOW_HEIGHT 480
+
+void save_texture(const char* file_name, SDL_Renderer* renderer, SDL_Texture* texture) {
+    SDL_Texture* target = SDL_GetRenderTarget(renderer);
+    SDL_SetRenderTarget(renderer, texture);
+    int width, height;
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+    SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
+    IMG_SavePNG(surface, file_name);
+    SDL_FreeSurface(surface);
+    SDL_SetRenderTarget(renderer, target);
+}
 
 int main(int argc, char **argv) {
 
@@ -61,35 +74,13 @@ int main(int argc, char **argv) {
 	    );
 
 	bool quit = false;
+    bool first_frame = false;
 
 	int hnum = 0;
 	int vnum = 0;
 
-	while (!quit) {
-
-		while (SDL_PollEvent(&e) == 1) {
-			if (e.type == SDL_QUIT) {
-				quit = true;
-			} else if (e.type == SDL_KEYDOWN) {
-				switch (e.key.keysym.sym) {
-				case SDLK_q:
-					quit = true;
-				default:
-					break;
-				}
-			}
-		}
-
-		auto keystate = SDL_GetKeyboardState(NULL);
-
-		top->reset_n = !keystate[SDL_SCANCODE_ESCAPE];
-
-		top->adj_hrs = keystate[SDL_SCANCODE_H];
-		top->adj_min = keystate[SDL_SCANCODE_M];
-		top->adj_sec = keystate[SDL_SCANCODE_S];
-
-		// simulate for 20000 clocks
-		for (int i = 0; i < 20000; ++i) {
+		// simulate for enough clocks to make a full frame = 640 * 480
+		for (int i = 0; i < 400000; ++i) {
 
 			top->clk = 0;
 			top->eval();
@@ -117,7 +108,6 @@ int main(int argc, char **argv) {
 			}
 
 		}
-
 		SDL_UpdateTexture(
 		    texture,
 		    NULL,
@@ -133,8 +123,8 @@ int main(int argc, char **argv) {
 		);
 
 		SDL_RenderPresent(renderer);
-	}
 
+    save_texture("test.png", renderer, texture);
 	top->final();
 	delete top;
 
