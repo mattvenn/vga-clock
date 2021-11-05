@@ -26,6 +26,7 @@ SOURCES = digit.v VgaSyncGen.v fontROM.v button_pulse.v vga_clock.v top.v
 LISTINGS = digit_index.hex col_index.hex
 
 CFLAGS = -O3 -Iobj_dir -I/usr/share/verilator/include
+PNGCFLAGS = -O3 -Ipng_dir -I/usr/share/verilator/include
 
 LDFLAGS = -lSDL2 -lSDL2_image
 
@@ -80,8 +81,16 @@ debug-digit:
 obj_dir/Vvga_clock.h : $(SOURCES) $(LISTINGS) ../sim/fb_verilator.cpp
 	verilator --cc vga_clock.v --exe ../sim/fb_verilator.cpp -CFLAGS "$(CFLAGS)" -LDFLAGS "$(LDFLAGS)"
 
+png_dir/Vvga_clock.h : $(SOURCES) $(LISTINGS) ../sim/fb_verilator.cpp
+	verilator --cc vga_clock.v --exe ../sim/png_verilator.cpp -CFLAGS "$(PNGCFLAGS)" -LDFLAGS "$(LDFLAGS)" -Mdir png_dir
+
 verilator: obj_dir/Vvga_clock.h
 	cd obj_dir && make -f Vvga_clock.mk
+
+pngtest: png_dir/Vvga_clock.h
+	cd png_dir && make -f Vvga_clock.mk
+	png_dir/Vvga_clock
+	diff test.png gold.png
 
 test:
 	echo "add a test here, for example generate a frame and check it against the png"
@@ -89,6 +98,8 @@ test:
 clean:
 	rm -f ${PROJECT}.json ${PROJECT}.asc ${PROJECT}.bin *log $(LISTINGS)
 	rm -rf obj_dir
+	rm -rf png_dir
+	rm -f test.png
 
 #secondary needed or make will remove useful intermediate files
 .SECONDARY:
